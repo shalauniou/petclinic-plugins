@@ -1,0 +1,56 @@
+//TODO: Should be removed after petclinic-artifactory is applied
+apply plugin: 'maven-publish'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+//TODO: uncomment when initial version of petclinic-artifactory plugin is published
+//apply plugin: 'petclinic-artifactory'
+
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        
+        if (project.hasProperty('developPlugins')) {
+            mavenLocal()
+        }
+    }
+
+    dependencies {
+        //TODO: uncomment when initial version of petclinic-artifactory plugin is published
+        //classpath("com.epam.petclinic.plugin:petclinic-plugins:${pluginsVersionToUse}")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
+    }
+}
+
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    runtime "io.spring.gradle:dependency-management-plugin"
+}
+
+dependencyManagement {
+    dependencies {
+        dependency "io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}"
+    }
+}
+
+//TODO: Should be removed after petclinic-artifactory is applied
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId('com.epam.petclinic.plugin')
+            artifactId(project.archivesBaseName)
+            version("${pluginsVersionToUse}")
+            from components.java
+        }
+    }
+}
