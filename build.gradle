@@ -35,6 +35,8 @@ repositories {
 dependencies {
     compile gradleApi()
     runtime "io.spring.gradle:dependency-management-plugin"
+    compile "org.jacoco:org.jacoco.core:${jacocoVersion}"
+    compile "org.jacoco:org.jacoco.report:${jacocoVersion}"
 }
 
 dependencyManagement {
