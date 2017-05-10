@@ -1,5 +1,9 @@
 # petclinic-plugins
 
-Change versions in gradle.properties
-Publish artifacts to maven local: gradle publishToMavenLocal -PdevelopPlugins
-Add artifact to classpath of the main project(in build.gradle), add apply plugin: <your plugin>
+- From petclinic-plugins root:
+Publish artifacts to maven local: gradle publishToMavenLocal
+
+- For main project where you want to use the plugins:
+Add classpath("com.epam.petclinic.plugin:petclinic-plugins:0.0.1") to your script dependencies in build.gradle
+For java plugin add - apply plugin: 'petclinic-java' (remove version, sourceCompatibility)
+For code coverage add - apply plugin: 'petclinic-code-coverage' and jacocoVersion=0.7.8(to gradle.properties)
