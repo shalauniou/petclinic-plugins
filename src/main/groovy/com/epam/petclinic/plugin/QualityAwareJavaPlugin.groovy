@@ -13,13 +13,13 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
-* The QualityAwareJavaPlugin adds configuration that is common to all Java projects.
-* Add java, checkstyle, pmd, findbug plugins.
-*
-* Date: 5/4/2017
-*
-* @author Stanislau Halauniou
-*/
+ * The QualityAwareJavaPlugin adds configuration that is common to all Java projects.
+ * Add java, checkstyle, pmd, findbug plugins.
+ *
+ * Date: 5/4/2017
+ *
+ * @author Stanislau Halauniou
+ */
 public class QualityAwareJavaPlugin implements Plugin<Project> {
 
     private static final String CODE_QUALITY_DIR = 'code-quality'
