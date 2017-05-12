@@ -34,9 +34,10 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    runtime "io.spring.gradle:dependency-management-plugin"
-    compile "org.jacoco:org.jacoco.core:${jacocoVersion}"
-    compile "org.jacoco:org.jacoco.report:${jacocoVersion}"
+    runtime('io.spring.gradle:dependency-management-plugin')
+    compile("org.jacoco:org.jacoco.core:${jacocoVersion}")
+    compile("org.jacoco:org.jacoco.report:${jacocoVersion}")
+    compile("org.asciidoctor:asciidoctor-gradle-plugin:${asciidoctorPluginVersion}")
 }
 
 dependencyManagement {
