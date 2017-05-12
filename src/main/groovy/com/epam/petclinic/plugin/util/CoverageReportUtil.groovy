@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets
  * @author Stanislau Halauniou
  */
 class CoverageReportUtil {
+    private static final String JACOCO_TEST_PATH = "jacoco/jacocoTest.exec"
     private static final int TAB_WIDTH = 4
     private static String title
 
@@ -45,7 +46,7 @@ class CoverageReportUtil {
      */
     public static void generate(Project project) throws IOException {
         title = project.projectDir.getName()
-        executionDataFile = new File(project.buildDir, 'jacoco/jacocoTest.exec')
+        executionDataFile = new File(project.buildDir, JACOCO_TEST_PATH)
         classesDirectory = project.sourceSets.main.output.classesDir
         sourceDirectory = project.sourceSets.main.java.getSrcDirs().getAt(0)
         reportDirectory = new File(project.buildDir, 'reports/coverage')

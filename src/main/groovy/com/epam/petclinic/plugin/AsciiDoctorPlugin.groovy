@@ -19,7 +19,7 @@ class AsciiDoctorPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply(REST_DOCS_PLUGIN)
         project.tasks['jar'].dependsOn(project.tasks['asciidoctor'])
-        def snippetsDir = project.file('build/generated-snippets')
+        File snippetsDir = project.file('build/generated-snippets')
 
         project.asciidoctor {
             attributes 'snippets': snippetsDir
