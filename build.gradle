@@ -1,27 +1,37 @@
-//TODO: Should be removed after petclinic-artifactory is applied
-apply plugin: 'maven-publish'
+//TODO: remove when initial version of petclinic-artifactory plugin is published
+//apply plugin: 'co.riiid.gradle'
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 //TODO: uncomment when initial version of petclinic-artifactory plugin is published
-//apply plugin: 'petclinic-artifactory'
+apply plugin: 'petclinic-artifactory'
 
 
 buildscript {
     repositories {
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url 'https://plugins.gradle.org/m2/'
         }
         
         if (project.hasProperty('developPlugins')) {
             mavenLocal()
+        } else {
+            maven {
+                url 'https://jitpack.io'
+            }
         }
     }
 
     dependencies {
-        //TODO: uncomment when initial version of petclinic-artifactory plugin is published
-        //classpath("com.epam.petclinic.plugin:petclinic-plugins:${pluginsVersionToUse}")
+        if (project.hasProperty('developPlugins')) {
+            //TODO: uncomment when initial version of petclinic-artifactory plugin is published
+            //classpath("com.epam.petclinic:petclinic-plugins:${pluginsVersionToUse}")
+        } else {
+            //TODO: uncomment when initial version of petclinic-artifactory plugin is published
+            classpath("com.github.${githubOwner}:petclinic-plugins:${pluginsVersionToUse}")
+        }
         classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
+        classpath('co.riiid:gradle-github-plugin:0.4.2')
     }
 }
 
@@ -46,14 +56,13 @@ dependencyManagement {
     }
 }
 
-//TODO: Should be removed after petclinic-artifactory is applied
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId('com.epam.petclinic.plugin')
-            artifactId(project.archivesBaseName)
-            version("${pluginsVersionToUse}")
-            from components.java
-        }
-    }
+
+//TODO: remove config when initial version of petclinic-artifactory plugin is published to jitpack artifactory
+github {
+    owner = "${githubOwner}"
+    repo = "${project.archivesBaseName}"
+    tagName = "${pluginsVersionToUse}"
+    token = "${petclinicReleaseToken}"
+    targetCommitish = 'master'
+    body = "${releaseNote}"
 }

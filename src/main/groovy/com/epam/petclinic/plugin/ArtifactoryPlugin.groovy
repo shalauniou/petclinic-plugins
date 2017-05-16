@@ -13,11 +13,13 @@ import org.gradle.api.tasks.bundling.Jar
  * @author Stanislau Halauniou
  */
 class ArtifactoryPlugin implements Plugin<Project> {
-    private final String MAVEN_PUBLISH_PLUGIN = "maven-publish"
+    private final String MAVEN_PUBLISH_PLUGIN = 'maven-publish'
+    private final String GITHUB_PUBLISH_PLUGIN = 'co.riiid.gradle'
 
     @Override
     void apply(Project project) {
         project.plugins.apply(MAVEN_PUBLISH_PLUGIN)
+        project.plugins.apply(GITHUB_PUBLISH_PLUGIN)
         configureMavenPublication(project)
     }
 
@@ -32,12 +34,21 @@ class ArtifactoryPlugin implements Plugin<Project> {
         project.publishing.publications {
             mavenJava(MavenPublication) {
                 artifactId(project.archivesBaseName)
-                groupId('com.epam.petclinic.plugin')
+                groupId('com.epam.petclinic')
                 version("${project.productVersion}")
                 from(project.components.java)
                 artifact(project.javadocJar)
                 artifact(project.sourcesJar)
             }
+        }
+
+        project.github {
+            owner = "${project.githubOwner}"
+            repo = "${project.archivesBaseName}"
+            tagName = "${project.productVersion}"
+            targetCommitish = 'master'
+            token = "${project.petclinicReleaseToken}"
+            body = "${project.releaseNote}"
         }
     }
 
