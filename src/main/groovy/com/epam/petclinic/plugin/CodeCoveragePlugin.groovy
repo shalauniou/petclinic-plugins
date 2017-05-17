@@ -51,7 +51,7 @@ class CodeCoveragePlugin implements Plugin<Project> {
         project.test {
             jacoco {
                 append = false
-                destinationFile = project.file("${project.buildDir}/jacoco/jacocoTest.exec")
+                destinationFile = project.file("${project.buildDir}/${CoverageReportUtil.JACOCO_TEST_PATH}")
                 classDumpFile = project.file("${project.buildDir}/jacoco/classpathdumps")
             }
             finalizedBy(project.createJacocoReport)
