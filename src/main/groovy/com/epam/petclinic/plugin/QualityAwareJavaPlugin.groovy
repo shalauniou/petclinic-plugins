@@ -1,5 +1,6 @@
 package com.epam.petclinic.plugin
 
+import com.epam.petclinic.plugin.extensions.QualityAwareJavaExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.quality.Checkstyle
@@ -11,17 +12,17 @@ import org.gradle.api.tasks.compile.JavaCompile
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
 /**
  * The QualityAwareJavaPlugin adds configuration that is common to all Java projects.
- * Add java, checkstyle, pmd, findbug plugins.
+ * Add java, checkstyle, pmd, findbugs plugins.
  *
  * Date: 5/4/2017
  *
  * @author Stanislau Halauniou
  */
 public class QualityAwareJavaPlugin implements Plugin<Project> {
-
     private static final String CODE_QUALITY_DIR = 'code-quality'
     private static final String JAVA_PLUGIN_ID = "java"
     private static final String CHECKSTYLE_PLUGIN_ID = "checkstyle"
@@ -30,12 +31,13 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        final String JAVA_VERSION = "1.8"
         project.plugins.apply(JAVA_PLUGIN_ID)
 
+        project.extensions.create(QualityAwareJavaExtension.NAME, QualityAwareJavaExtension)
+
         project.tasks.withType(JavaCompile) {
-            sourceCompatibility = JAVA_VERSION
-            targetCompatibility = JAVA_VERSION
+            sourceCompatibility = project.javaQuality.javaVersion
+            targetCompatibility = project.javaQuality.javaVersion
             options.encoding = 'UTF-8'
             options.compilerArgs = [
                     '-Xlint:deprecation',
@@ -49,24 +51,29 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
             ]
         }
 
-        configureCheckStyle(project)
-        configurePMD(project)
-        configureFindBugs(project)
+        project.afterEvaluate {
+            configureCheckStyle(project)
+            configurePMD(project)
+            configureFindBugs(project)
+        }
     }
 
     private void configureCheckStyle(Project project) {
         project.plugins.apply(CHECKSTYLE_PLUGIN_ID)
 
         project.checkstyle {
-            toolVersion = "7.1"
-            config = getToolResource(project, "checkstyle/checkstyle-rules.xml")
-            configProperties.suppressionsFile = getToolPath(project, "checkstyle/checkstyle-suppressions.xml")
+            toolVersion = project.javaQuality.checkstyleToolVersion
+            config = getToolResource(project, 'checkstyle/checkstyle-rules.xml')
+            configProperties.suppressionsFile =
+                    getFilePath(project, 'checkstyle/checkstyle-suppressions.xml',
+                            project.javaQuality.checkstyleSupressionPath)
             ignoreFailures = true
         }
 
         project.tasks.withType(Checkstyle) {
             reports {
-                html.stylesheet(getToolResource(project, 'checkstyle/checkstyle-noframes-severity-sorted.xsl'))
+                html.stylesheet(
+                        getToolResource(project, 'checkstyle/checkstyle-noframes-severity-sorted.xsl'))
             }
         }
     }
@@ -76,10 +83,9 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
 
         project.pmd {
             ignoreFailures = true
-            toolVersion = "5.5.1"
-            ruleSetFiles = project.rootProject.files("/${CODE_QUALITY_DIR}/pmd/pmd-rules-general.xml",
-                    "/${CODE_QUALITY_DIR}/pmd/pmd-rules-prod.xml"
-            )
+            toolVersion = project.javaQuality.pmdToolVersion
+            ruleSetFiles = project.rootProject.files(getFilePath(project, 'pmd/pmd-rules-general.xml'))
+
         }
 
         /*
@@ -101,9 +107,9 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
         project.plugins.apply(FINDBUGS_PLUGIN_ID)
 
         project.findbugs {
-            toolVersion = "3.0.1"
+            toolVersion = project.javaQuality.findbugToolVersion
             sourceSets = [project.sourceSets.main, project.sourceSets.test]
-            excludeFilter = project.file("${project.rootDir}/${CODE_QUALITY_DIR}/findbugs/findbugs-exclude.xml")
+            excludeFilter = project.file(getFilePath(project, 'findbugs/findbugs-exclude.xml'))
             ignoreFailures = true
         }
 
@@ -133,7 +139,7 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
                     project.ant.xslt(
                             in: "$xmlReportPath",
                             out: "$htmlReportPath",
-                            style: getToolPath(project, stylesheetRelativePath),
+                            style: getFilePath(project, stylesheetRelativePath),
                             destdir: "${project[toolName].reportsDir}"
                     )
                 }
@@ -141,14 +147,44 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
         }
     }
 
-    private static TextResource getToolResource(Project project, String relativeReference) {
+    private static TextResource getToolResource(Project project, String relativeReference, String overriddenPath) {
         return project.rootProject.resources.text.fromFile(
-                getToolPath(project, relativeReference)
+                getFilePath(project, relativeReference, overriddenPath)
         )
     }
 
-    private static String getToolPath(Project project, String relativeReference) {
-        return "${project.rootDir}/${CODE_QUALITY_DIR}/${relativeReference}"
+    private static TextResource getToolResource(Project project, String relativeReference) {
+        return getToolResource(project, relativeReference, null)
+    }
+
+    private static String getFilePath(Project project, String localPath, String overriddenPath) {
+        if (overriddenPath == null || overriddenPath.isEmpty()) {
+            // Gets file from plugins resources locally and copy to project
+            return getAndCopyFileFromPluginsToProject(project, localPath)
+        }
+        return "${project.rootDir}/${overriddenPath}"
+    }
+
+    private static String getFilePath(Project project, String localPath) {
+        return getFilePath(project, localPath, null)
+    }
+
+
+    /**
+     * Copy file from plugins to root project to the code-quality directory(used for idea plugins).
+     *
+     * @param project from which you run plugins
+     * @param path to file from plugins directories
+     * @return created file path for project
+     */
+    private static String getAndCopyFileFromPluginsToProject(Project project, String path) {
+        String codeQualityPath = "${CODE_QUALITY_DIR}/${path}"
+        URL resource = QualityAwareJavaPlugin.getClassLoader().getResource(codeQualityPath)
+        File targetFile = new File("${project.rootDir}/${codeQualityPath}");
+        File directory = new File(targetFile.getParentFile().getAbsolutePath());
+        directory.mkdirs();
+        Files.copy(resource.openStream(), targetFile.toPath(),  StandardCopyOption.REPLACE_EXISTING)
+        return targetFile.absolutePath
     }
 
 }

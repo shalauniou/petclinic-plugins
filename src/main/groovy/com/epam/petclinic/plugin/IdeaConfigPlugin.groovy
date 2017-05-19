@@ -96,15 +96,12 @@ public class IdeaConfigPlugin implements Plugin<Project> {
         String pmdCommonRulesPath = "${projectDirReformatted}${separator}${CODE_QUALITY_DIR}${separator}pmd" +
                 "${separator}pmd-rules-general.xml"
 
-        String pmdMainRulesPath = "${projectDirReformatted}${separator}${CODE_QUALITY_DIR}${separator}pmd" +
-                "${separator}pmd-rules-prod.xml"
 
         //projectDir cannot be pre-defined, so I insert it manually
         Node customizedNode = new XmlParser().parseText("""
             <option name=\"customRuleSets\">
               <list>
                 <option value=\"${pmdCommonRulesPath}\"/>
-                <option value=\"${pmdMainRulesPath}\"/>
               </list>
             </option>
         """)

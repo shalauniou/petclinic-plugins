@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<ruleset name="Petclinic-General"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Petclinic general PMD rule set (Applied to all files)
+    </description>
+    <!--
+        Reference at PMD rules documentation:
+
+        http://pmd.sourceforge.net/pmd-{yourPmdVersion}/pmd-java/rules/index.html
+        look for PMD version at properties file (default is 5.4.1)
+    -->
+
+    <!--
+        ****************************************************************************************************
+        Basic
+
+        Good practices which should be followed.
+
+        Read about enabled checks at:
+        http://pmd.sourceforge.net/pmd-5.4.1/pmd-java/rules/java/basic.html
+        ****************************************************************************************************
+    -->
+    <rule ref="rulesets/java/basic.xml">
+        <!-- Declared in CheckStyle rules -->
+        <exclude name="OverrideBothEqualsAndHashcode"/>
+        <exclude name="BooleanInstantiation"/>
+        <!-- We don't use JDBC -->
+        <exclude name="CheckResultSet"/>
+    </rule>
+
+    <!--
+        ****************************************************************************************************
+        Design
+
+        The Design ruleset contains rules that flag suboptimal code implementations. Alternate approaches are suggested.
+        Full set is not included because some rules exist in CheckStyle
+        ****************************************************************************************************
+    -->
+
+    <!--
+        Locale-related checks. May be enabled, if necessary
+    -->
+    <!--<rule ref="rulesets/java/design.xml/SimpleDateFormatNeedsLocale"/>-->
+    <!--<rule ref="rulesets/java/design.xml/UseLocaleWithCaseConversions"/>-->
+
+    <!--
+        Reassigning values to incoming parameters is not recommended. Use temporary local variables instead.
+    -->
+    <rule ref="rulesets/java/design.xml/AvoidReassigningParameters"/>
+
+    <rule ref="rulesets/java/design.xml/SwitchDensity">
+        <properties>
+            <property name="minimum" value="6"/> <!-- Default is 10 -->
+        </properties>
+    </rule>
+
+    <!--
+        Switch statement has too few branches (default report level is 3 or fewer).
+    -->
+    <rule ref="rulesets/java/design.xml/TooFewBranchesForASwitchStatement"/>
+
+    <!--
+        Calling overridable methods during construction poses a risk of invoking methods on an incompletely
+        constructed object and can be difficult to debug.
+    -->
+    <rule ref="rulesets/java/design.xml/ConstructorCallsOverridableMethod"/>
+
+    <!--
+        Calls of private constructors from outside of the constructor’s class often causes the generation of an accessor.
+         A factory method, or non-privatization of the constructor can eliminate this situation.
+    -->
+    <rule ref="rulesets/java/design.xml/AccessorClassGeneration">
+        <properties>
+            <property name="violationSuppressXPath">
+                <value>
+                    <![CDATA[
+                    /.//MethodDeclaration[./MethodDeclarator[@Image='build' and (../../Annotation/MarkerAnnotation/Name[@Image='Override'])]]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/design.xml/FinalFieldCouldBeStatic"/>
+
+    <!-- Non case labels in switch are allowed, but not recommended -->
+    <rule ref="rulesets/java/design.xml/NonCaseLabelInSwitchStatement"/>
+
+    <!--
+        Tests for null should not use the equals() method. The == operator should be used instead.
+    -->
+    <rule ref="rulesets/java/design.xml/EqualsNull"/>
+
+    <!--
+        Avoid negation within an "if" expression with an "else" clause.
+    -->
+    <rule ref="rulesets/java/design.xml/ConfusingTernary"/>
+
+    <!--
+        Avoid instantiating an object just to call getClass() on it; use the .class public member instead.
+    -->
+    <rule ref="rulesets/java/design.xml/InstantiationToGetClass"/>
+
+    <!--
+        Avoid idempotent operations - they have no effect.
+    -->
+    <rule ref="rulesets/java/design.xml/IdempotentOperations"/>
+
+    <!--
+        Identifies private fields whose values never change once they are initialized.
+   -->
+    <rule ref="rulesets/java/design.xml/ImmutableField"/>
+
+    <!--
+        Identifies a possible unsafe usage of a static field.
+    -->
+    <rule ref="rulesets/java/design.xml/AssignmentToNonFinalStatic"/>
+
+    <!--
+        A class that has private constructors and does not have any static methods or fields cannot be used.
+    -->
+    <!--<rule ref="rulesets/java/design.xml/MissingStaticMethodInNonInstantiatableClass"/>-->
+
+    <!--
+        Method-level synchronization can cause problems when new code is added to the method.
+        Block-level synchronization helps to ensure that only the code that needs synchronization gets it.
+    -->
+    <rule ref="rulesets/java/design.xml/AvoidSynchronizedAtMethodLevel"/>
+
+    <!--
+        Each caught exception type should be handled in its own catch clause.
+    -->
+    <rule ref="rulesets/java/design.xml/AvoidInstanceofChecksInCatchClause"/>
+
+    <rule ref="rulesets/java/design.xml/AbstractClassWithoutAbstractMethod"/>
+
+    <!--
+        No need to check for null before an instanceof; the instanceof keyword returns false when given a null argument.
+    -->
+    <rule ref="rulesets/java/design.xml/SimplifyConditional"/>
+
+    <!--
+        Use equals() to compare object references; avoid comparing them with ==.
+    -->
+    <rule ref="rulesets/java/design.xml/CompareObjectsWithEquals"/>
+
+    <rule ref="rulesets/java/design.xml/UnnecessaryLocalBeforeReturn"/>
+
+    <!--
+        Non-thread safe singletons can result in bad state changes.
+    -->
+    <rule ref="rulesets/java/design.xml/NonThreadSafeSingleton"/>
+
+    <!--
+        Instance of singleton returned but not cached
+    -->
+    <rule ref="rulesets/java/design.xml/SingletonClassReturningNewInstance"/>
+
+    <!--
+        Throwing a new exception from a catch block without passing the original exception into the new exception.
+    -->
+    <rule ref="rulesets/java/design.xml/PreserveStackTrace"/>
+
+    <rule ref="rulesets/java/design.xml/EmptyMethodInAbstractClassShouldBeAbstract"/>
+
+    <!--
+        Find fields whose scopes are limited to just single method.
+     -->
+    <rule ref="rulesets/java/design.xml/SingularField"/>
+
+    <rule ref="rulesets/java/design.xml/AbstractClassWithoutAnyMethod"/>
+
+    <!--
+        ****************************************************************************************************
+        Naming
+
+        Rules regarding preferred usage of names and identifiers.
+        ****************************************************************************************************
+    -->
+    <!--
+        Non-constructor methods should not have the same name as the enclosing class.
+    -->
+    <rule ref="rulesets/java/naming.xml/MethodWithSameNameAsEnclosingClass"/>
+
+    <!--
+        Method name should not be the same as field name.
+    -->
+    <rule ref="rulesets/java/naming.xml/AvoidFieldNameMatchingMethodName"/>
+
+    <!--
+        Boolean field getters should be named as isField(), not getField()
+    -->
+    <rule ref="rulesets/java/naming.xml/BooleanGetMethodName"/>
+
+    <!--
+        ****************************************************************************************************
+        Optimization
+
+        Different optimizations that generally apply to best practices.
+        ****************************************************************************************************
+    -->
+    <rule ref="rulesets/java/optimizations.xml/UnnecessaryWrapperObjectCreation"/>
+
+    <!--
+        Use toString() or String.valueOf() instead of +""
+    -->
+    <rule ref="rulesets/java/optimizations.xml/AddEmptyString"/>
+
+    <!--
+        Checks for variables that are defined before they might be used.
+    -->
+    <rule ref="rulesets/java/optimizations.xml/PrematureDeclaration"/>
+
+    <!--
+        ****************************************************************************************************
+        Strict Exceptions
+
+        Guidelines about throwing and catching exceptions.
+
+        Read about enabled checks at:
+        http://pmd.sourceforge.net/pmd-5.4.1/pmd-java/rules/java/strictexception.html
+        ****************************************************************************************************
+    -->
+    <rule ref="rulesets/java/strictexception.xml">
+        <exclude name="SignatureDeclareThrowsException"/>
+    </rule>
+
+    <!--
+        ****************************************************************************************************
+        Strings
+
+        Rules of manipulation with the String, StringBuffer, or StringBuilder instances.
+
+        Read about enabled checks at:
+        http://pmd.sourceforge.net/pmd-5.4.1/pmd-java/rules/java/strings.html
+        ****************************************************************************************************
+    -->
+    <rule ref="rulesets/java/strings.xml"/>
+
+    <!--
+        ****************************************************************************************************
+        Unnecessary and unused code
+
+        Read about enabled checks at:
+        http://pmd.sourceforge.net/pmd-5.4.1/pmd-java/rules/java/unnecessary.html
+        http://pmd.sourceforge.net/pmd-5.4.1/pmd-java/rules/java/unusedcode.html
+        ****************************************************************************************************
+    -->
+    <rule ref="rulesets/java/unnecessary.xml">
+        <exclude name="UselessParentheses"/>
+    </rule>
+    <rule ref="rulesets/java/unusedcode.xml"/>
+
+    <!--
+        ****************************************************************************************************
+        Custom XPath rules
+        ****************************************************************************************************
+    -->
+    <rule name="NonInstantiatableNonBuildableClass"
+          language="java"
+          message="Class does not have correct builder, cannot be instantiated and does not provide any static methods or fields"
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            This class has bad design or cannot be used because it does not have nested builder class or any static methods or fields.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                        //ClassOrInterfaceDeclaration[@Nested='false']
+                        [
+                          (
+                            count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration)>0
+                            and
+                            count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) = count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Private='true'])
+                          )
+                          and
+                          count(.//MethodDeclaration[@Static='true'])=0
+                          and
+                          count(.//FieldDeclaration[@Private='false'][@Static='true'])=0
+                          and
+                          count(.//ClassOrInterfaceDeclaration[@Nested='true']
+                                   [@Public='true']
+                                   [@Static='true']
+                                   [count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration[@Public='true']) > 0
+                                    or
+                                    count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/ConstructorDeclaration) = 0]
+                                   [count(./ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/MethodDeclaration
+                                            [@Public='true']
+                                            [@Name='build']
+                                            [../Annotation/MarkerAnnotation/Name[@Image='Override']]
+                                            [./ResultType/Type/ReferenceType/ClassOrInterfaceType
+                                                [@Image = //ClassOrInterfaceDeclaration[@Nested='false']/@Image]
+                                            ]
+                                    ) > 0]
+                               ) = 0
+                        ]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+</ruleset>

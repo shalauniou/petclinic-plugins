@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<!-- NOTE: '\\/' string means single '/' escaped twice - according to regexp then to Java rules -->
+<suppressions>
+    <suppress files=".*Application.java" checks="HideUtilityClassConstructor"/>
+
+    <!-- TESTS -->
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="JavadocMethod"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="MethodCount"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="MethodLength"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="ParameterNumber"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="MagicNumber"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" id="lengthCheck"/>
+    <!-- disable code metrics for tests -->
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="ClassDataAbstractionCoupling"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="ClassFanOutComplexity"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="CyclomaticComplexity"/>
+    <suppress files=".*[\\/]src[\\/]test[a-zA-Z]*[\\/].*.java" checks="NPathComplexity"/>
+    <!-- end of code metrics -->
+
+</suppressions>
