@@ -85,7 +85,6 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
             ignoreFailures = true
             toolVersion = project.javaQuality.pmdToolVersion
             ruleSetFiles = project.rootProject.files(getFilePath(project, 'pmd/pmd-rules-general.xml'))
-
         }
 
         /*
@@ -183,7 +182,9 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
         File targetFile = new File("${project.rootDir}/${codeQualityPath}");
         File directory = new File(targetFile.getParentFile().getAbsolutePath());
         directory.mkdirs();
-        Files.copy(resource.openStream(), targetFile.toPath(),  StandardCopyOption.REPLACE_EXISTING)
+        resource.openStream().withCloseable { is ->
+            Files.copy(is, targetFile.toPath(),  StandardCopyOption.REPLACE_EXISTING)
+        }
         return targetFile.absolutePath
     }
 
