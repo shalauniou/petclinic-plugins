@@ -1,0 +1,1076 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+    <module name="SuppressionFilter">
+        <property name="file" value="${suppressionsFile}"/>
+    </module>
+
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+    <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
+    <!-- Checks whether files end with a new line.                        -->
+    <!-- <property name="lineSeparator" value="system"/> -->
+    <!-- <property name="fileExtensions" value=""/> -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- Checks for long source files. -->
+    <!-- See http://checkstyle.sourceforge.net/config_sizes.html#FileLength -->
+    <!-- <property name="max" value="2000"/> -->
+    <!-- <property name="fileExtensions" value=""/> -->
+    <module name="FileLength">
+        <property name="severity" value="warning"/>
+        <property name="max" value="500"/>
+    </module>
+    <module name="FileLength">
+        <property name="severity" value="error"/>
+        <property name="max" value="1500"/>
+    </module>
+
+    <!-- Checks that there are no tab characters ('\t') in the source code -->
+    <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#FileTabCharacter -->
+    <!-- <property name="eachLine" value="false"/> -->
+    <!-- <property name="fileExtensions" value=""/> -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <!-- Checks that property files contain the same keys.         -->
+    <!-- See http://checkstyle.sourceforge.net/config_misc.html#Translation -->
+    <!-- <property name="fileExtensions" value="properties"/> -->
+    <module name="Translation"/>
+
+    <!-- Checks properties files for duplicated properties                       -->
+    <!-- See http://checkstyle.sourceforge.net/config_misc.html#UniqueProperties -->
+    <!-- <property name="fileExtensions" value="properties"/>                    -->
+    <module name="UniqueProperties"/>
+
+    <!-- A check for detecting single lines that match a supplied regular expression -->
+    <!-- See http://checkstyle.sourceforge.net/config_regexp.html#RegexpSingleline   -->
+    <!-- <property name="format" value=""/>                                          -->
+    <!-- <property name="message" value=""/>                                         -->
+    <!-- <property name="ignoreCase" value="false"/>                                 -->
+    <!-- <property name="minimum" value="0"/>                                        -->
+    <!-- <property name="maximum" value="0"/>                                        -->
+    <!-- <property name="fileExtensions" value=""/>                                  -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+
+    <!-- Checks that a source file begins with a specified header. -->
+    <!-- See http://checkstyle.sourceforge.net/config_header.html   -->
+    <!-- <property name="headerFile"     value=""/> -->
+    <!-- <property name="charset"        value=""/> -->
+    <!-- <property name="header"         value=""/> -->
+    <!-- <property name="ignoreLines"    value=""/> -->
+    <!-- <property name="fileExtensions" value=""/> -->
+    <!-- <module name="Header"/> -->
+
+    <!-- Checks that each Java package has a Javadoc file used for commenting. -->
+    <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocPackage -->
+    <!-- <property name="allowLegacy" value="false"/> -->
+    <!-- <module name="JavadocPackage"/> -->
+
+    <module name="SuppressWarningsFilter" />
+
+    <module name="TreeWalker">
+
+        <module name="SuppressWarningsHolder" />
+
+        <!-- ************************************************** -->
+        <!-- This check controls the usage style of annotations -->
+        <!-- See http://checkstyle.sf.net/config_naming.html    -->
+        <!-- ************************************************** -->
+
+        <!-- Check location of annotation on language elements                               -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#AnnotationLocation -->
+        <!-- <property name="allowSamelineMultipleAnnotations" value="false"/>               -->
+        <!-- <property name="allowSamelineSingleParameterlessAnnotation" value="true"/>      -->
+        <!-- <property name="allowSamelineParameterizedAnnotation" value="false"/>           -->
+        <!-- <property name="tokens" value=""/>                                              -->
+        <module name="AnnotationLocation"/>
+
+        <!-- This check controls the usage style of annotations. -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#AnnotationUseStyle -->
+        <!-- <property name="elementStyle" value="compact_no_array"/> -->
+        <!-- <property name="closingParens" value="never"/> -->
+        <!-- <property name="trailingArrayComma" value="never"/> -->
+        <module name ="AnnotationUseStyle">
+            <property name="elementStyle" value="compact"/>
+        </module>
+
+        <!-- Verifies that both the java.lang.Deprecated import is present and the @deprecated Javadoc tag is present when either is present. -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#MissingDeprecated -->
+        <!-- <property name="skipNoJavadoc" value="false"/> -->
+        <module name="MissingDeprecated"/>
+
+        <!-- Verifies that the java.lang.Override annotation is present when the {@inheritDoc} javadoc tag is present. -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#MissingOverride                              -->
+        <!-- <property name="javaFiveCompatibility" value="false"/>  -->
+        <module name="MissingOverride"/>
+
+        <!-- This check makes sure that all package annotations are in the package-info.java file. -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#PackageAnnotation        -->
+        <!-- <module name="PackageAnnotation"/>                                                    -->
+
+        <!-- This check allows you to specify what warnings that SuppressWarnings is not allowed to suppress.  -->
+        <!-- You can also specify a list of TokenTypes that the configured warning(s) cannot be suppressed on. -->
+        <!-- See http://checkstyle.sourceforge.net/config_annotation.html#SuppressWarnings                     -->
+        <!-- <property name="format" value="^$|^\s+$"/>                                                        -->
+        <!-- <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF,
+                                           ANNOTATION_FIELD_DEF, ENUM_CONSTANT_DEF, PARAMETER_DEF,
+                                           VARIABLE_DEF, METHOD_DEF, CTOR_DEF"/>                               -->
+        <!-- <module name="SuppressWarnings">                                                                  -->
+
+
+        <!-- *********************************************** -->
+        <!-- Checks for Naming Conventions                   -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <!-- *********************************************** -->
+
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html !-->
+        <!-- <property name="format"         value="^Abstract.+$"/> -->
+        <!-- <property name="ignoreModifier" value="false"/> -->
+        <!-- <property name="ignoreName"     value="false"/> -->
+        <module name="AbstractClassName"/>
+
+        <!-- Checks for class type parameter name naming conventions. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ClassTypeParameterName !-->
+        <!-- <property name="format"   value="^[A-Z]{1,2}$"/> -->
+        <module name="ClassTypeParameterName"/>
+
+        <!-- Validates identifiers for constants                                   -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ConstantName -->
+        <!-- <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>       -->
+        <!-- <property name="applyToPublic" value="true/>                          -->
+        <!-- <property name="applyToProtected" value="true"/>                      -->
+        <!-- <property name="applyToPackage" value="true"/>                        -->
+        <!-- <property name="applyToPrivate" value="true"/>                        -->
+        <module name="ConstantName"/>
+
+        <!-- Validates constant length                                   -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ConstantName -->
+        <!-- <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>       -->
+        <!-- <property name="applyToPublic" value="true/>                          -->
+        <!-- <property name="applyToProtected" value="true"/>                      -->
+        <!-- <property name="applyToPackage" value="true"/>                        -->
+        <!-- <property name="applyToPrivate" value="true"/>                        -->
+        <module name="ConstantName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([A-Z0-9_]{5,35})$"/>
+            <message key="name.invalidPattern"
+                     value="Constant name must be from 5 to 35 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for local, final variables, including catch parameters -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#LocalFinalVariableName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="tokens" value="VARIABLE_DEF, PARAMETER_DEF"/> -->
+        <module name="LocalFinalVariableName"/>
+
+        <!-- Validates length for local, final variables, including catch parameters -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#LocalFinalVariableName -->
+        <!-- <property name="tokens" value="VARIABLE_DEF, PARAMETER_DEF"/> -->
+        <module name="LocalFinalVariableName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([a-zA-Z0-9]{3,32})$"/>
+            <message key="name.invalidPattern"
+                     value="Local variable name must be from 3 to 32 characters long."
+            />
+        </module>
+
+        <!-- Checks that local, non-final variable names conform to a specified format -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#LocalVariableName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="allowOneCharVarInForLoop" value="false/> -->
+        <module name="LocalVariableName">
+            <property name="allowOneCharVarInForLoop" value="true"/>
+        </module>
+
+        <!-- Validates length for local non-final variable names -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#LocalVariableName -->
+        <module name="LocalVariableName">
+            <property name="id" value="lengthCheck"/>
+            <property name="allowOneCharVarInForLoop" value="true"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([a-zA-Z0-9]{3,32})$"/>
+            <message key="name.invalidPattern"
+                     value="Local variable name must be from 3 to 32 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for non-static fields -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#MemberName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="MemberName"/>
+
+        <!-- Validates length for non-static field names (name 'id' is legal) -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#MemberName -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="MemberName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^((id)|([a-zA-Z0-9]{3,32}))$"/>
+            <message key="name.invalidPattern"
+                     value="Field name must be from 3 to 32 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for methods -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#MethodName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="MethodName"/>
+
+        <!-- Validates length for method names -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#MethodName -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="MethodName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([a-zA-Z0-9]{4,35})$"/>
+            <message key="name.invalidPattern"
+                     value="Method name must be from 4 to 35 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for packages -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#PackageName -->
+        <!-- <property name="format" value="^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$"/> -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9_]*)*$"/>
+        </module>
+
+        <!-- Validates identifiers for packages (singular form) -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]*[a-rt-z]{1}(\.[a-z][a-z0-9_]*[a-rt-z]{1}|\.[a-rt-z]{1}|\.pms)*$"/>
+            <property name="severity" value="warning"/>
+            <message key="name.invalidPattern"
+                     value="Package name ''{0}'' may include plurals. It''s recommended to use singular form in package names."
+            />
+        </module>
+
+        <!-- Checks that method and catch parameter names conform to a specified format -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ParameterName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="ignoreOverridden" value="false/> -->
+        <module name="ParameterName"/>
+
+        <!-- Checks length of method and catch parameter names ('id' is legal name) -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#ParameterName -->
+        <!-- <property name="ignoreOverridden" value="false/> -->
+        <module name="ParameterName">
+            <property name="id" value="lengthCheck"/>
+            <property name="ignoreOverridden" value="true"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^((id)|([a-zA-Z0-9]{3,32}))$"/>
+            <message key="name.invalidPattern"
+                     value="Parameter name must be from 3 to 32 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for static, non-final fields -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#StaticVariableName -->
+        <!-- <property name="format" value="^[a-z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <!-- Static variable should start from a small 's' letter -->
+        <module name="StaticVariableName">
+            <property name="format" value="^s[A-Z]+[a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Validates length of identifiers for static, non-final fields -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#StaticVariableName -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="StaticVariableName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([a-zA-Z0-9]{4,35})$"/>
+            <message key="name.invalidPattern"
+                     value="Static variable name must be from 4 to 35 characters long."
+            />
+        </module>
+
+        <!-- Validates identifiers for classes, interfaces, enums, and annotations -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#TypeName -->
+        <!-- <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/> -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="TypeName"/>
+
+        <!-- Validates class and interface name length -->
+        <!-- See http://checkstyle.sourceforge.net/config_naming.html#TypeName -->
+        <!-- <property name="applyToPublic" value="true/> -->
+        <!-- <property name="applyToProtected" value="true"/> -->
+        <!-- <property name="applyToPackage" value="true"/> -->
+        <!-- <property name="applyToPrivate" value="true"/> -->
+        <module name="TypeName">
+            <property name="id" value="lengthCheck"/>
+            <property name="severity" value="warning"/>
+            <property name="format" value="^([a-zA-Z0-9]{4,36})$"/>
+            <message key="name.invalidPattern"
+                     value="Type name must be from 4 to 36 characters long."
+            />
+        </module>
+
+
+        <!-- ***************************************************** -->
+        <!-- Javadoc checks                                        -->
+        <!-- http://checkstyle.sourceforge.net/config_javadoc.html -->
+        <!-- ***************************************************** -->
+
+
+        <!-- Checks to ensure that the javadoc tags exist (if required) !-->
+        <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocMethod !-->
+        <!-- <property name="scope"                        value="private"/> -->
+        <!-- <property name="excludeScope"                 value=""/> -->
+        <!-- <property name="allowUndeclaredRTE"           value="false"/> -->
+        <!-- <property name="allowThrowsTagsForSubclasses" value="false"/> -->
+        <!-- <property name="allowMissingParamTags"        value="false"/> -->
+        <!-- <property name="allowMissingThrowsTags"       value="false"/> -->
+        <!-- <property name="allowMissingReturnTag"        value="false"/> -->
+        <!-- <property name="allowMissingJavadoc"          value="false"/> -->
+        <!-- <property name="allowMissingPropertyJavadoc"  value="false"/> -->
+        <!-- <property name="logLoadErrors"                value="true"/> -->
+        <!-- <property name="suppressLoadErrors"           value="false"/> -->
+        <!-- <property name="tokens"                       value="METHOD_DEF, CTOR_DEF"/> -->
+        <module name="JavadocMethod">
+            <property name="severity" value="error"/>
+            <property name="validateThrows" value="true"/>
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            <property name="excludeScope" value="private"/>
+        </module>
+
+        <!-- Validates Javadoc comments to help ensure they are well formed. -->
+        <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocStyle -->
+        <!-- <property name="scope"               value="private"/> -->
+        <!-- <property name="excludeScope"        value=""/> -->
+        <!-- <property name="checkFirstSentence"  value="true"/> -->
+        <!-- <property name="endOfSentenceFormat" value="([.?!][ \t\n\r\f<])|([.?!]$)"/> -->
+        <!-- <property name="checkEmptyJavadoc"   value="false"/> -->
+        <!-- <property name="checkHtml"           value="false"/> -->
+        <!-- <property name="tokens"              value="INTERFACE_DEF, CLASS_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/> -->
+        <module name="JavadocStyle">
+            <property name="scope" value="package"/>
+        </module>
+
+        <!-- Checks Javadoc comments for class and interface definitions. -->
+        <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocType -->
+        <!-- <property name="scope"                 value="private"/> -->
+        <!-- <property name="excludeScope"          value=""/> -->
+        <!-- <property name="authorFormat"          value=""/> -->
+        <!-- <property name="versionFormat"         value=""/> -->
+        <!-- <property name="allowMissingParamTags" value="false"/> -->
+        <!-- <property name="allowUnknownTags"      value="false"/> -->
+        <!-- <property name="tokens"                value="INTERFACE_DEF, CLASS_DEF"/> -->
+        <module name="JavadocType">
+            <property name="scope" value="package"/>
+        </module>
+
+        <!-- Checks that variables have Javadoc comments. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocVariable !-->
+        <!-- <property name="scope"        value="private"/> -->
+        <!-- <property name="excludeScope" value=""/> -->
+        <!-- <property name="ignoreNamePattern" value=""/> -->
+        <module name="JavadocVariable">
+            <property name="scope" value="package"/>
+        </module>
+
+        <!-- Checks the indentation of the continuation lines in at-clauses !-->
+        <!-- See http://checkstyle.sourceforge.net/config_javadoc.html#JavadocTagContinuationIndentation !-->
+        <!-- <property name="offset" value="4"/> -->
+        <module name="JavadocTagContinuationIndentation"/>
+
+        <!-- ********************************************************* -->
+        <!-- Checks for metrics                                        -->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html -->
+        <!-- ********************************************************* -->
+
+        <!-- Restrict the number of number of &&, || and ^ in an expression. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html#BooleanExpressionComplexity !-->
+        <!-- <property name="max"    value="3"/> -->
+        <!-- <property name="tokens" value="LAND, BAND, LOR, BOR, BXOR"/> -->
+        <module name="BooleanExpressionComplexity"/>
+
+        <!-- This metric measures the number of instantiations of other classes within the given class. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html#ClassDataAbstractionCoupling !-->
+        <!-- <property name="max" value="7"/> -->
+        <module name="ClassDataAbstractionCoupling">
+            <property name="severity" value="warning"/>
+            <property name="max" value="16"/>
+        </module>
+
+        <!-- The number of other classes a given class relies on. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html#ClassFanOutComplexity !-->
+        <!-- <property name="max" value="20"/> -->
+        <module name="ClassFanOutComplexity">
+            <property name="severity" value="warning"/>
+            <property name="max" value="30"/>
+        </module>
+
+        <!-- Checks cyclomatic complexity against a specified limit. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html#CyclomaticComplexity !-->
+        <!-- <property name="max" value="10"/> -->
+        <module name="CyclomaticComplexity">
+            <property name="severity" value="warning"/>
+            <property name="max" value="8"/>
+        </module>
+
+        <!-- Determines complexity of methods, classes and files by counting the Non Commenting Source Statements (NCSS). !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html#JavaNCSS !-->
+        <!-- <property name="methodMaximum" value="50"/> -->
+        <!-- <property name="classMaximum"  value="1500"/> -->
+        <!-- <property name="fileMaximum"   value="2000"/> -->
+        <!-- <module name="JavaNCSS"> -->
+
+        <!-- The NPATH metric computes the number of possible execution paths through a function. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_metrics.html !-->
+        <!-- <property name="max" value="200"/> -->
+        <module name="NPathComplexity">
+            <property name="severity" value="warning"/>
+        </module>
+
+
+        <!-- ********************************************************* -->
+        <!-- Checks for imports                                        -->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
+        <!-- ********************************************************* -->
+
+
+        <!-- checks that there are no import statements that use the * notation -->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html#AvoidStarImport -->
+        <!-- <property name="excludes" value=""/> -->
+        <!-- <property name="allowClassImports" value="false"/> -->
+        <!-- <property name="allowStaticMemberImports" value="false"/> -->
+        <module name="AvoidStarImport"/>
+
+        <!-- Checks that there are no static import statements. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html#AvoidStaticImport !-->
+        <!-- <property name="excludes" value=""/> -->
+        <!-- <module name="AvoidStaticImport"/> -->
+
+        <!-- Checks for imports from a set of illegal packages. -->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html#IllegalImport -->
+        <!-- <property name="illegalPkgs" value="sun"/> -->
+        <module name="IllegalImport">
+            <property name="severity" value="warning"/>
+            <property name="illegalPkgs"
+                      value="sun, org.jboss, org.apache.catalina, org.postgresql, log4j, org.apache.commons.logging, java.util.logging"/>
+        </module>
+
+        <!-- Checks for redundant import statements -->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html#RedundantImport -->
+        <module name="RedundantImport"/>
+
+        <!-- Checks for unused import statements -->
+        <!-- See http://checkstyle.sourceforge.net/config_imports.html#UnusedImports -->
+        <!-- <property name="processJavadoc" value="true"/> -->
+        <module name="UnusedImports"/>
+
+
+        <!-- *************************************************** -->
+        <!-- Checks for Size Violations.                         -->
+        <!-- http://checkstyle.sourceforge.net/config_sizes.html -->
+        <!-- *************************************************** -->
+
+
+        <!-- Checks for long anonymous inner classes. -->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#AnonInnerLength -->
+        <!-- <property name="max" value="20"/> -->
+        <!-- <module name="AnonInnerLength"/> -->
+
+        <!-- Checks for long lines -->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#LineLength -->
+        <!-- <property name="ignorePattern" value="^$"/> -->
+        <!-- <property name="max" value="80"/> -->
+        <module name="LineLength">
+            <property name="max" value="120"/>
+            <property name="ignorePattern" value="^import .*$"/>
+        </module>
+
+        <!-- Checks the number of methods declared in each type. This includes the number of each scope !-->
+        <!-- (private, package, protected and public) as well as an overall total. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#MethodCount !-->
+        <!-- NOTE: this check doesn't ignore getters and setters -->
+        <module name="MethodCount">
+            <property name="maxTotal" value="100"/>
+            <property name="maxPrivate" value="25"/>
+            <property name="maxPackage" value="25"/>
+            <property name="maxProtected" value="25"/>
+            <property name="maxPublic" value="100"/>
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Checks for long methods and constructors -->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#MethodLength -->
+        <!-- <property name="countEmpty" value="true"/> -->
+        <!-- <property name="max" value="150"/> -->
+        <module name="MethodLength">
+            <property name="max" value="150"/>
+        </module>
+
+        <!-- Checks the number of parameters of a method or constructor -->
+        <!-- See http://checkstyle.sourceforge.net/config_sizes.html#ParameterNumber -->
+        <!-- <property name="ignoreOverriddenMethods" value="false"/> -->
+        <!-- <property name="max" value="7"/> -->
+        <module name="ParameterNumber">
+            <property name="max" value="5"/>
+        </module>
+
+
+        <!-- ************************************************************ -->
+        <!-- Checks for whitespace                                        -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html -->
+        <!-- ************************************************************ -->
+
+        <!-- Checks the padding of an empty initializer at "for" cycle -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#EmptyForIteratorPad-->
+        <!-- <property name="option" value="nospace"/> -->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="space"/>
+        </module>
+
+
+        <!-- Checks the padding of an empty iterator at "for" cycle -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#EmptyForIteratorPad-->
+        <!-- <property name="option" value="nospace"/> -->
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="space"/>
+        </module>
+
+        <!-- Checks for empty catch blocks. There are two options to make validation more precise -->
+        <!-- (by default Check allows empty catch block with any comment inside) -->
+        <!-- http://checkstyle.sourceforge.net/config_blocks.html#EmptyCatchBlock-->
+        <!-- <property name="exceptionVariableName" value="^$"/> -->
+        <!-- <property name="commentFormat" value=".*"/> -->
+        <module name="EmptyCatchBlock">
+            <property name="commentFormat" value="^Ignored: .*$"/>
+        </module>
+
+        <!-- Checks that the whitespace around the Generic tokens are correct to the typical convention -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#GenericWhitespace -->
+        <module name="GenericWhitespace"/>
+
+        <!-- Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#MethodParamPad -->
+        <!-- <property name="allowLineBreaks" value="false"/> -->
+        <!-- <property name="option" value="nospace"/> -->
+        <module name="MethodParamPad"/>
+
+        <!-- Checks that there is no whitespace after a token -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#NoWhitespaceAfter -->
+        <!-- <property name="allowLineBreaks" value="true"/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="NoWhitespaceAfter"/>
+
+        <!-- Checks that there is no whitespace before a token -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#NoWhitespaceBefore -->
+        <!-- <property name="allowLineBreaks" value="false"/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- Checks the policy on how to wrap lines on operators -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#OperatorWrap -->
+        <!-- <property name="option" value="nl"/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="OperatorWrap">
+            <property name="option" value="nl"/>
+        </module>
+
+        <!-- Checks line wrapping with separators.  -->
+        <!-- http://checkstyle.sourceforge.net/config_whitespace.html#SeparatorWrap -->
+        <!-- <property name="option" value="eol"/> -->
+        <!-- <property name="tokens" value="DOT, COMMA"/> -->
+        <module name="SeparatorWrap">
+            <property name="option" value="nl"/>
+            <property name="tokens" value="DOT"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="option" value="eol"/>
+            <property name="tokens" value="COMMA"/>
+        </module>
+
+        <!-- Checks the policy on the padding of parentheses                       -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#ParenPad -->
+        <!-- <property name="option" value="nospace"/>                             -->
+        <!-- <property name="tokens" value=""/>                                    -->
+        <module name="ParenPad"/>
+
+        <!-- Checks the policy on the padding of parentheses for typecasts                 -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#TypecastParenPad -->
+        <!-- <property name="option" value="nospace"/>                                     -->
+        <module name="TypecastParenPad"/>
+
+        <!-- Checks that a token is followed by whitespace                                -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#WhitespaceAfter -->
+        <!-- <property name="tokens" value=""/>                                           -->
+        <module name="WhitespaceAfter"/>
+
+        <!-- Checks that a token is surrounded by whitespace                               -->
+        <!-- See http://checkstyle.sourceforge.net/config_whitespace.html#WhitespaceAround -->
+        <!-- <property name="tokens" value=""/>                                            -->
+        <!-- <property name="allowEmptyConstructors" value="false"/>                       -->
+        <!-- <property name="allowEmptyMethods" value="false"/>                            -->
+        <!-- <property name="allowEmptyTypes" value="false"/>                              -->
+        <!-- <property name="allowEmptyLoops" value="false"/>                              -->
+        <!-- <property name="allowEmptyLambdas" value="false"/>                            -->
+        <!-- <property name="ignoreEnhancedForColon" value="true"/>                        -->
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyLambdas" value="true"/>
+        </module>
+
+
+        <!-- ********************************************************** -->
+        <!-- Modifier Checks                                            -->
+        <!-- See http://checkstyle.sourceforge.net/config_modifier.html -->
+        <!-- ********************************************************** -->
+
+
+        <!-- Checks that the order of modifiers conforms to the suggestions
+            in the Java Language specification, sections 8.1.1, 8.3.1 and 8.4.3.      -->
+        <!-- See http://checkstyle.sourceforge.net/config_modifier.html#ModifierOrder -->
+        <module name="ModifierOrder"/>
+
+        <!-- Checks that there is no redundant modifiers.                                 -->
+        <!-- See http://checkstyle.sourceforge.net/config_modifier.html#RedundantModifier -->
+        <!-- <property name="tokens" value="METHOD_DEF, VARIABLE_DEF"/>                   -->
+        <module name="RedundantModifier"/>
+
+
+        <!-- ******************************************************** -->
+        <!-- Checks for blocks. You know, those {}'s                  -->
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html -->
+        <!-- ******************************************************** -->
+
+
+        <!-- Finds nested blocks, i.e. blocks that are used freely in the code. -->
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html#AvoidNestedBlocks -->
+        <!-- <property name="allowInSwitchCase" value="false"/> -->
+        <module name="AvoidNestedBlocks"/>
+
+        <!-- Checks for empty blocks -->
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html#EmptyBlock -->
+        <!-- <property name="option" value=""/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="EmptyBlock">
+            <property name="option" value="stmt"/>
+        </module>
+
+        <!-- Checks for the placement of left curly braces ('{') for code blocks. -->
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html#LeftCurlyk -->
+        <!-- <property name="option" value="eol"/> -->
+        <!-- <property name="maxLineLength" value="80"/> - option is DEPRECATED -->
+        <!-- <property name="tokens" value="CLASS_DEF, CTOR_DEF,
+                INTERFACE_DEF, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE,
+                LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_SWITCH,
+                LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE,
+                METHOD_DEF"/> -->
+        <module name="LeftCurly"/>
+
+        <!-- Checks for braces around code blocks -->
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html#NeedBraces -->
+        <!-- <property name="allowSingleLineStatement" value="false"/> -->
+        <!-- <property name="allowEmptyLoopBody" value="false"/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="NeedBraces"/>
+
+        <!-- See http://checkstyle.sourceforge.net/config_blocks.html#RightCurly -->
+        <!-- Checks the placement of right curly braces ('}') for else, try, and catch tokens. -->
+        <!-- <property name="option" value="same"/> -->
+        <!-- <property name="shouldStartLine" value="true"/> -->
+        <!-- <property name="tokens" value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE"/> -->
+        <module name="RightCurly"/>
+
+
+        <!-- ******************************************************** -->
+        <!-- Checks for common coding problems                        -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html -->
+        <!-- ******************************************************** -->
+
+
+        <!-- Checks that array initialization contains a trailing comma -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html   -->
+        <!-- <module name="ArrayTrailingComma"/>                        -->
+
+        <!-- Checks the policy on the padding of parentheses                             -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#AvoidInlineConditionals -->
+        <!-- <property name="option" value="nospace"/>                                   -->
+        <!-- <module name="AvoidInlineConditionals"/>                                    -->
+
+        <!-- Checks that classes that define a covariant equals() method
+             also override method equals(java.lang.Object)                -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html     -->
+        <!-- <module name="CovariantEquals"/>                             -->
+
+        <!-- Checks for multiple occurrences of the same string literal within a single file. -->
+        <!-- <property name="allowedDuplicates" value="1"/>         -->
+        <!-- <property name="ignoreStringsRegexp" value='^""$'/>    -->
+        <!-- <property name="ignoreOccurrenceContext" value="ANNOTATION"/>    -->
+        <module name="MultipleStringLiterals">
+            <property name="allowedDuplicates" value="2"/>
+            <property name="ignoreOccurrenceContext" value="ANNOTATION, ANNOTATIONS, ARRAY_INIT, ARRAY_DECLARATOR, COMMENT_CONTENT, ASSIGN"/>
+        </module>
+        <!-- Checks declaration order according to Code Conventions for the Java Programming Language. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#DeclarationOrder  -->
+        <!-- <property name="severity" value="warning"/>               -->
+        <!-- <property name="ignoreConstructors" value="false"/>       -->
+        <!-- <property name="ignoreMethods"      value="false"/>       -->
+        <!-- <property name="ignoreModifiers"    value="false"/>       -->
+        <module name="DeclarationOrder"/>
+
+        <!-- Check that the default is after all the cases in a switch statement.      -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#DefaultComesLast -->
+        <module name="DefaultComesLast"/>
+
+        <!-- Checks that any combination of String literals with optional assignment is on the left side of an equals() comparison. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#EqualsAvoidNull !-->
+        <!-- <property name="ignoreEqualsIgnoreCase" value="false"/>               -->
+        <module name="EqualsAvoidNull"/>
+
+        <!-- Detects empty statements (standalone ";" semicolon)                     -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#EmptyStatement -->
+        <module name="EmptyStatement"/>
+
+        <!-- Checks that classes that override equals() also override hashCode()     -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#EqualsHashCode -->
+        <module name="EqualsHashCode"/>
+
+        <!-- Checks if any class or object member explicitly initialized to default for its type value. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html -->
+        <!-- <module name="ExplicitInitialization"/> -->
+
+
+        <!-- Checks for fall-through in switch statements.     				      -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#FallThrough -->
+        <module name="FallThrough"/>
+
+        <!-- Checks that a local variable or a parameter does not shadow a field
+            that is defined in the same class. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#HiddenField -->
+        <!-- <property name="tokens" value="PARAMETER_DEF, VARIABLE_DEF"/>        -->
+        <!-- <property name="ignoreFormat" value=""/>                             -->
+        <!-- <property name="ignoreConstructorParameter" value="false"/>          -->
+        <!-- <property name="ignoreSetter" value="false"/>                        -->
+        <module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true"/>
+            <property name="ignoreSetter" value="true"/>
+        </module>
+
+        <!-- This check can be used to ensure that types are not declared to be thrown. !-->
+        <!-- Declaring to throw java.lang.Error or java.lang.RuntimeException is almost never acceptable. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#IllegalThrows !-->
+        <!-- <property name="illegalClassNames" value="java.lang.Throwable, java.lang.Error, java.lang.RuntimeException"/> -->
+        <module name="IllegalThrows"/>
+
+        <!-- Checks for illegal tokens. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#IllegalToken -->
+        <!-- <property name="tokens" value="LITERAL_SWITCH, POST_INC, POST_DEC"/>  -->
+        <!-- <module name="IllegalToken"> -->
+
+        <!-- Checks for assignments in subexpressions, such as in
+            String s = Integer.toString(i = 2);. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#InnerAssignment -->
+        <!-- <property name="tokens" value="ASSIGN, BAND_ASSIGN, BOR_ASSIGN,
+                BSR_ASSIGN, BXOR_ASSIGN, DIV_ASSIGN, MINUS_ASSIGN,
+                MOD_ASSIGN, PLUS_ASSIGN, SL_ASSIGN, SR_ASSIGN,
+                STAR_ASSIGN"/> -->
+        <module name="InnerAssignment"/>
+
+        <!-- Checks that each variable declaration is in its own statement and on its own line. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.htmlMultipleVariableDeclarations -->
+        <!-- <module name="MultipleVariableDeclarations"/> -->
+
+        <!-- Checks that there are no "magic numbers", where a magic number
+            is a numeric literal that is not defined as a constant. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#InnerAssignment   -->
+        <!-- <property name="tokens" value="NUM_DOUBLE, NUM_FLOAT, NUM_INT, NUM_LONG"/> -->
+        <!-- <property name="ignoreNumbers" value="-1, 0, 1, 2"/>    -->
+        <!-- <property name="ignoreHashCodeMethod" value="false"/>   -->
+        <!-- <property name="ignoreAnnotation" value="false"/> 		 -->
+        <!-- <property name="ignoreFieldDeclaration" value="false"/> -->
+        <!-- <property name="constantWaiverParentToken" value=""/>   -->
+        <module name="MagicNumber">
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Checks that switch statement has "default" clause.                            -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#MissingSwitchDefault -->
+        <module name="MissingSwitchDefault">
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Check for ensuring that for loop control variables are not modified inside the for block. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#ModifiedControlVariable !-->
+        <module name="ModifiedControlVariable"/>
+
+
+        <!-- Restricts nested for blocks to a specified depth. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#NestedForDepth#NestedForDepth -->
+        <!-- <property name="max" value="1"/> -->
+        <module name="NestedForDepth">
+            <property name="max" value="2"/>
+            <property name="severity" value="warning"/>
+        </module>
+        <module name="NestedForDepth">
+            <property name="max" value="3"/>
+            <property name="severity" value="error"/>
+        </module>
+
+        <!-- Restricts nested if-else blocks to a specified depth. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#NestedIfDepth -->
+        <!-- <property name="max" value="1"/> -->
+        <module name="NestedIfDepth">
+            <property name="max" value="2"/>
+            <property name="severity" value="warning"/>
+        </module>
+        <module name="NestedIfDepth">
+            <property name="severity" value="error"/>
+            <property name="max" value="3"/>
+        </module>
+
+        <!-- Restricts nested try-catch blocks to a specified depth. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#NestedTryDepth -->
+        <!-- <property name="max" value="1"/> -->
+        <module name="NestedTryDepth">
+            <property name="severity" value="error"/>
+            <property name="max" value="2"/>
+        </module>
+
+        <!-- Checks that the clone method is not overridden from the Object class. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#NoClone !-->
+        <module name="NoClone">
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Verifies there are no finalize() methods defined in a class. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#NoFinalizer -->
+        <module name="NoFinalizer">
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Checks that there is only one statement per line                             -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#OneStatementPerLine -->
+        <module name="OneStatementPerLine">
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Ensure a class is has a package declaration.                                -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#PackageDeclaration -->
+        <module name="PackageDeclaration"/>
+
+        <!-- Checks that code doesn't rely on the "this." default. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#RequireThis -->
+        <!-- <property name="checkFields"  value="true"/> -->
+        <!-- <property name="checkMethods" value="true"/> -->
+        <!-- <property name="validateOnlyOverlapping" value="true"/> -->
+        <module name="RequireThis"/>
+
+        <!-- Restrict the number of return statements. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#ReturnCount -->
+        <!-- <property name="max"    value="2"/> -->
+        <!-- <property name="format" value="^equals$ (empty)"/> -->
+        <!-- <property name="tokens" value=""/> -->
+        <module name="ReturnCount">
+            <property name="severity" value="warning"/>
+            <property name="max" value="4"/>
+        </module>
+
+        <!-- Checks for overly complicated boolean expressions.                                 -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#SimplifyBooleanExpression -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!-- Checks for overly complicated boolean expressions.                             -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#SimplifyBooleanReturn -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- Checks that string literals are not used with == or !=. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#StringLiteralEquality -->
+        <module name="StringLiteralEquality"/>
+
+        <!-- Checks that an overriding clone() method invokes super.clone(). -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#SuperClone -->
+        <module name="SuperClone"/>
+
+        <!-- Checks that an overriding finalize() method invokes super.finalize(). -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#SuperFinalize -->
+        <module name="SuperFinalize"/>
+
+        <!-- Checks for the use of unnecessary parentheses. -->
+        <!-- See http://checkstyle.sourceforge.net/config_coding.html#UnnecessaryParentheses -->
+        <module name="UnnecessaryParentheses"/>
+
+
+        <!-- ******************************************************** -->
+        <!-- Checks for class design                                  -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html -->
+        <!-- ******************************************************** -->
+
+
+        <!-- Checks that classes are designed for extension                              -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#DesignForExtension -->
+        <!-- <module name="DesignForExtension"/>                                         -->
+
+        <!-- Checks that a class which has only private constructors is declared as final -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#FinalClass          -->
+        <module name="FinalClass"/>
+
+        <!-- Make sure that utility classes (classes that contain only static methods) do not have a public constructor -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#HideUtilityClassConstructor                       -->
+        <module name="HideUtilityClassConstructor"/>
+
+        <!-- Check nested (internal) classes/interfaces are declared at the bottom of the class after all method and field declarations. !-->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#InnerTypeLast !-->
+        <module name="InnerTypeLast"/>
+
+        <!-- Implements Bloch, Effective Java, Item 17 - Use Interfaces only to define types -->
+        <!-- It is therefore inappropriate to define an interface that does not contain any methods but only constants. -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#InterfaceIsType        -->
+        <!-- <property name="allowMarkerInterfaces" value="true"/>   -->
+        <module name="InterfaceIsType"/>
+
+        <!-- Ensures that exceptions (defined as any class name conforming to some regular expression) are immutable. -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#MutableException -->
+        <!-- <property name="format" value="^.*Exception$|^.*Error$|^.*Throwable$"/> -->
+        <!-- <property name="extendedClassNameFormat" value="^.*Exception$|^.*Error$|^.*Throwable$"/> -->
+        <module name="MutableException"/>
+
+        <!-- Restricts throws statements to a specified count. -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#ThrowsCount -->
+        <!-- <property name="max" value="4"/> -->
+        <!-- <property name="ignorePrivateMethods" value="true"/> -->
+        <module name="ThrowsCount"/>
+
+        <!-- Checks visibility of class members. -->
+        <!-- See http://checkstyle.sourceforge.net/config_design.html#VisibilityModifier -->
+        <!-- <property name="packageAllowed"      value="false"/> -->
+        <!-- <property name="protectedAllowed"    value="false"/> -->
+        <!-- <property name="publicMemberPattern" value="^serialVersionUID$"/> -->
+        <!-- <property name="allowPublicImmutableFields"      value="true"/> -->
+        <!-- <property name="immutableClassCanonicalNames"    value="..."/> -->
+        <!-- <property name="ignoreAnnotationCanonicalNames" value="^..."/> -->
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="true"/>
+            <property name="protectedAllowed" value="true"/>
+        </module>
+
+
+        <!-- ****************************************************** -->
+        <!-- Miscellaneous other checks                             -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html -->
+        <!-- ****************************************************** -->
+
+
+        <!-- Checks the style of array type definitions.		                   -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#ArrayTypeStyle -->
+        <!-- <property name="javaStyle" value="true"/>                             -->
+        <module name="ArrayTypeStyle"/>
+
+        <!-- Restrict using Unicode escapes (e.g. \u221e)  -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#AvoidEscapedUnicodeCharacters -->
+        <!-- <property name="allowEscapesForControlCharacters" value="false"/> -->
+        <!-- <property name="allowByTailComment" value="false"/> -->
+        <!-- <property name="allowIfAllCharactersEscaped" value="false"/> -->
+        <!-- <property name="allowNonPrintableEscapes" value="false"/> -->
+        <module name="AvoidEscapedUnicodeCharacters"/>
+
+        <!-- Checks for restricted tokens beneath other tokens. 					-->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#DescendantToken -->
+        <!-- <property name="tokens"         value=""/> 							-->
+        <!-- <property name="limitedTokens"  value=""/> 							-->
+        <!-- <property name="minimumDepth"   value="0"/> 							-->
+        <!-- <property name="maximumDepth"   value="java.lang.Integer.MAX_VALUE"/>  -->
+        <!-- <property name="minimumNumber"  value="0"/> 							-->
+        <!-- <property name="maximumNumber"  value="java.lang.Integer.MAX_VALUE"/>  -->
+        <!-- <property name="sumTokenCounts" value="false"/> 						-->
+        <!-- <property name="minimumMessage" value="descendant.token.min"/> 		-->
+        <!-- <property name="maximumMessage" value="descendant.token.max"/> 		-->
+        <!-- <module name="DescendantToken"/>                                       -->
+
+        <!-- Recommend using lambdas -->
+        <module name="DescendantToken">
+            <property name="tokens" value="METHOD_CALL"/>
+            <property name="limitedTokens" value="METHOD_DEF"/>
+            <property name="maximumNumber" value="0"/>
+            <property name="maximumMessage" value="Use lambdas instead of anonymous classes."/>
+            <property name="severity" value="warning"/>
+        </module>
+
+        <!-- Check that method/constructor parameters are final.                    -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#FinalParameters -->
+        <!-- <property name="tokens"         value=""/>                             -->
+        <!-- <property name="limitedTokens"  value=""/>                             -->
+        <!-- <module name="FinalParameters"/> -->
+
+        <!-- Checks correct indentation of Java Code.                           -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#Indentation -->
+        <!-- <property name="basicOffset" value="4"/>                           -->
+        <!-- <property name="braceAdjustment" value="0"/>                       -->
+        <!-- <property name="caseIndent" value="4"/>                            -->
+        <!-- <property name="throwsIndent" value="4"/>                          -->
+        <!-- <property name="arrayInitIndent" value="4"/>                       -->
+        <!-- <property name="lineWrappingIndentation" value="4"/>               -->
+        <!-- <property name="forceStrictCondition" value="true"/>               -->
+        <module name="Indentation">
+            <property name="lineWrappingIndentation" value="8"/>
+        </module>
+
+        <!-- Checks that the outer type name and the file name match.                 -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#OuterTypeFilename -->
+        <module name="OuterTypeFilename"/>
+
+        <!-- A check for TODO: comments. Actually it is a generic regular expression matcher on Java comments. -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#TodoComment                                -->
+        <!-- <property name="format" value="TODO:"/>                                                           -->
+        <module name="TodoComment">
+            <property name="format" value="(TO_DO)|(TO DO)|(to_do)|(to do)"/>
+        </module>
+
+        <!-- The check to ensure that requires that comments be the only thing on a line. -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#TrailingComment       -->
+        <!-- <property name="format"       value="^[\\s\\}\\);]*$"/>                      -->
+        <!-- <property name="legalComment" value=""/>                                     -->
+        <module name="TrailingComment"/>
+
+        <!-- Checks for uncommented main() methods (debugging leftovers).           -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#UncommentedMain -->
+        <!-- <property name="excludedClasses" value="^$"/>                          -->
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value="^*.Application$"/>
+        </module>
+
+        <!-- Checks that long constants are defined with an upper ell. That is 'L' and not 'l' -->
+        <!-- See http://checkstyle.sourceforge.net/config_misc.html#UpperEll                   -->
+        <module name="UpperEll"/>
+
+    </module>
+</module>
+

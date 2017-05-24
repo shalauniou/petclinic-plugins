@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <Bug category="EXPERIMENTAL"/>
+    </Match>
+    <Match>
+        <Or>
+            <!-- We don't use AWT & Swing -->
+            <Bug code="BOA"/>
+            <!-- Can remove if we don't use cloneable objects -->
+            <Bug code="CN"/>
+            <!-- Consider returning a zero length array rather than null -->
+            <Bug code="PZLA"/>
+            <!-- Can remove if we don't use JUnit -->
+            <Bug code="IJU"/>
+            <!-- May these checks (naming) be also performed by other tools? -->
+            <Bug code="Nm"/>
+            <!-- Can remove if we don't use servlets and Struts -->
+            <Bug code="MTIA"/>
+        </Or>
+    </Match>
+</FindBugsFilter>

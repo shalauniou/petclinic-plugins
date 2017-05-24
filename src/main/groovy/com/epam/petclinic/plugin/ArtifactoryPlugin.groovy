@@ -32,7 +32,7 @@ class ArtifactoryPlugin implements Plugin<Project> {
         project.publishing.publications {
             mavenJava(MavenPublication) {
                 artifactId(project.archivesBaseName)
-                groupId('com.epam.petclinic.plugin')
+                groupId('com.epam.petclinic')
                 version("${project.productVersion}")
                 from(project.components.java)
                 artifact(project.javadocJar)

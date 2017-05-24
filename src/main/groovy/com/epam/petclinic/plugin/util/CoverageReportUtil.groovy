@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets
  *
  * @author Stanislau Halauniou
  */
-class CoverageReportUtil {
+final class CoverageReportUtil {
     private static final String JACOCO_TEST_PATH = "jacoco/jacocoTest.exec"
     private static final int TAB_WIDTH = 4
     private static String title

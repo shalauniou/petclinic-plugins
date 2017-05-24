@@ -14,7 +14,7 @@ import org.gradle.api.plugins.JavaPlugin
  * @author Stanislau Halauniou
  */
 class CodeCoveragePlugin implements Plugin<Project> {
-
+    private static final String JACOCO_TOOL_VERSION = '0.7.8'
     private static final String CODE_COVERAGE_TASK_GROUP = 'Petclinic Code Coverage'
     private static final String JACOCO_PLUGIN_ID = 'jacoco'
     private static final String XML_REPORT_PATH = '/reports/coverage/coverage-report.xml'
@@ -44,7 +44,7 @@ class CodeCoveragePlugin implements Plugin<Project> {
 
         //JaCoCo version
         project.jacoco {
-            toolVersion = "${project.jacocoVersion}"
+            toolVersion = JACOCO_TOOL_VERSION
         }
 
         //configuration of the JaCoCo specific properties of the test task
