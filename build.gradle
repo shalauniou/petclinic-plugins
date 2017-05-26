@@ -37,6 +37,7 @@ dependencies {
     compile("org.asciidoctor:asciidoctor-gradle-plugin:${asciidoctorPluginVersion}")
     compile("org.liquibase:liquibase-gradle-plugin:${gradlePluginVersion}")
     compile("org.postgresql:postgresql:${postgreSqlVersion}")
+    compile("org.apache.commons:commons-lang3:${commonsLangVersion}")
     runtime("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
 }
 
