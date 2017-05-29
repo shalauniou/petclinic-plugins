@@ -1,6 +1,9 @@
 package com.epam.petclinic.plugin
 
 import com.epam.petclinic.plugin.extensions.QualityAwareJavaExtension
+import com.epam.petclinic.plugin.util.CodeQualityUtil
+import org.apache.commons.lang3.StringUtils
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.quality.Checkstyle
@@ -28,6 +31,7 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
     private static final String CHECKSTYLE_PLUGIN_ID = "checkstyle"
     private static final String PMD_PLUGIN_ID = "pmd"
     private static final String FINDBUGS_PLUGIN_ID = "findbugs"
+    private static final String CHECK_CODE_QUALITY_ERRORS_TASK = "checkCodeQualityErrors"
 
     @Override
     void apply(Project project) {
@@ -50,6 +54,8 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
                     '-Xlint:unchecked'
             ]
         }
+
+        createCheckCodeQualityErrorsTask(project)
 
         project.afterEvaluate {
             configureCheckStyle(project)
@@ -186,6 +192,34 @@ public class QualityAwareJavaPlugin implements Plugin<Project> {
             Files.copy(is, targetFile.toPath(),  StandardCopyOption.REPLACE_EXISTING)
         }
         return targetFile.absolutePath
+    }
+
+    /**
+     * Create task, that find errors in checkstyle, findbugs or pmd reports and if there are exists  - fail build
+     * and log those errors.
+     *
+     * @param project current project
+     */
+    private void createCheckCodeQualityErrorsTask(Project project) {
+        project.tasks.create(name: CHECK_CODE_QUALITY_ERRORS_TASK) {
+            description("Fail build if any Checkstyle, Pmd or Findbugs error found.")
+            doLast {
+                List reportErrors = []
+                project.sourceSets.each { sourceSet ->
+                    String sourceName = sourceSet.name
+                    reportErrors.addAll(CodeQualityUtil.getCheckstyleReportErrors(project, sourceName))
+                    reportErrors.addAll(CodeQualityUtil.getFindbugsReportErrors(project, sourceName))
+                    reportErrors.addAll(CodeQualityUtil.getPmdReportErrors(project, sourceName))
+                }
+
+                if (!reportErrors.isEmpty()) {
+                    throw new GradleException("Rule violations were found at modules, Please, look at " +
+                            "Checkstyle, Pmd or Findbugs reports: \n" + StringUtils.join(reportErrors, "\n"))
+                }
+            }
+        }
+
+        project.tasks['build'].dependsOn(project.tasks[CHECK_CODE_QUALITY_ERRORS_TASK])
     }
 
 }
